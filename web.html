@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TenderMind - Indian Government Tenders Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    /* Marquee Effect */
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll-left 20s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Custom Animations */
+    @keyframes slideInLeft {
+      0% { transform: translateX(-50px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      0% { transform: translateX(50px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(-5px); }
+      50% { transform: translateY(0); }
+    }
+
+    .animate-slide-left {
+      animation: slideInLeft 0.7s ease-in-out;
+    }
+
+    .animate-slide-right {
+      animation: slideInRight 0.7s ease-in-out;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .animate-bounce-slow {
+      animation: bounce 3s infinite ease-in-out;
+    }
+
+    .scroll-container {
+      display: flex;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+
+    /* Table animations */
+    @keyframes scroll-up {
+      0% { transform: translateY(0%); }
+      100% { transform: translateY(-100%); }
+    }
+
+    .tender-card {
+      transition: all 0.3s ease;
+    }
+
+    .tender-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Custom bullet points */
+    .custom-bullet li {
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .custom-bullet li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #3b82f6, #10b981);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Navigation Bar -->
+  <nav class="bg-gradient-to-r from-blue-600 to-blue-800 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <a href="#" class="flex items-center">
+            <i class="fas fa-clipboard-check text-2xl mr-2"></i>
+            <span class="text-xl font-bold">TenderMind</span>
+          </a>
+        </div>
+        <div class="hidden md:flex space-x-6">
+          <a href="#" class="text-gray-100 hover:text-white flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-700 rounded-md">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
+          <a href="./newTender.html" class="text-gray-100 hover:text-white flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-700 rounded-md">
+            <i class="fas fa-plus-circle mr-1"></i> New Tender
+          </a>
+          <a href="#" class="text-gray-100 hover:text-white flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-700 rounded-md">
+            <i class="fas fa-cogs mr-1"></i> Services
+          </a>
+          <a href="./createACC.html" class="text-gray-100 hover:text-white flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-700 rounded-md">
+            <i class="fas fa-user-plus mr-1"></i> Create Account
+          </a>
+        </div>
+        <div class="md:hidden">
+          <button id="menu-toggle" class="text-gray-100 hover:text-white focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden bg-blue-800 md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#" class="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700">
+          <i class="fas fa-home mr-2"></i> Home
+        </a>
+        <a href="./newTender.html" class="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700">
+          <i class="fas fa-plus-circle mr-2"></i> New Tender
+        </a>
+        <a href="#" class="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700">
+          <i class="fas fa-cogs mr-2"></i> Services
+        </a>
+        <a href="./createACC.html" class="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700">
+          <i class="fas fa-user-plus mr-2"></i> Create Account
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white py-24">
+    <div class="container mx-auto px-6 md:px-20 relative z-10">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 md:pr-10 mb-10 md:mb-0 animate-slide-left">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Your Gateway to <br><span class="text-yellow-300">Government Tenders</span></h1>
+          <p class="text-lg mb-8">Find, manage, and win tenders with ease. Get real-time updates and detailed information tailored for your business needs.</p>
+          <div class="flex space-x-4">
+            <a href="#tenders" class="bg-white text-blue-600 hover:bg-blue-100 px-6 py-3 rounded-lg font-semibold transition-colors duration-300 shadow-lg flex items-center">
+              <i class="fas fa-search mr-2"></i> Find Tenders
+            </a>
+            <a href="./newTender.html" class="bg-transparent hover:bg-white hover:text-blue-600 text-white px-6 py-3 rounded-lg font-semibold border-2 border-white transition-colors duration-300 flex items-center">
+              <i class="fas fa-user-plus mr-2"></i> Register
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 animate-slide-right">
+          <img src="/api/placeholder/600/400" alt="Tender Management" class="rounded-lg shadow-2xl border-4 border-white/20">
+        </div>
+      </div>
+    </div>
+    <!-- Decorative elements -->
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-white" style="clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);"></div>
+    <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400 rounded-full opacity-20 -mr-32 -mt-32"></div>
+    <div class="absolute bottom-0 left-0 w-40 h-40 bg-blue-300 rounded-full opacity-20 -ml-20 -mb-20"></div>
+  </section>
+
+  <!-- Stats Banner -->
+  <div class="bg-white py-10 shadow-md relative z-20">
+    <div class="container mx-auto">
+      <div class="flex flex-wrap justify-around text-center">
+        <div class="w-1/2 md:w-1/4 px-4 mb-6 md:mb-0 animate-fade-in">
+          <div class="flex flex-col items-center">
+            <div class="text-4xl font-bold text-blue-600 mb-2 flex items-center">
+              <i class="fas fa-plus-circle mr-2 text-green-500"></i>
+              <span class="counter">100</span><span>+</span>
+            </div>
+            <p class="text-gray-600">New Tenders Daily</p>
+          </div>
+        </div>
+        <div class="w-1/2 md:w-1/4 px-4 mb-6 md:mb-0 animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="flex flex-col items-center">
+            <div class="text-4xl font-bold text-blue-600 mb-2 flex items-center">
+              <i class="fas fa-building mr-2 text-blue-500"></i>
+              <span class="counter">10000</span><span>+</span>
+            </div>
+            <p class="text-gray-600">Indian Projects</p>
+          </div>
+        </div>
+        <div class="w-1/2 md:w-1/4 px-4 animate-fade-in" style="animation-delay: 0.4s;">
+          <div class="flex flex-col items-center">
+            <div class="text-4xl font-bold text-blue-600 mb-2 flex items-center">
+              <i class="fas fa-clipboard-check mr-2 text-purple-500"></i>
+              <span class="counter">5000</span><span>+</span>
+            </div>
+            <p class="text-gray-600">Live Tenders</p>
+          </div>
+        </div>
+        <div class="w-1/2 md:w-1/4 px-4 animate-fade-in" style="animation-delay: 0.6s;">
+          <div class="flex flex-col items-center">
+            <div class="text-4xl font-bold text-blue-600 mb-2 flex items-center">
+              <i class="fas fa-award mr-2 text-yellow-500"></i>
+              <span class="counter">1000</span><span>+</span>
+            </div>
+            <p class="text-gray-600">Contract Awards</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Find Your Perfect Tender</h2>
+          <p class="text-gray-600 text-lg">Search from 8 Lacs+ Government Tenders across India</p>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+          <div class="flex flex-col md:flex-row justify-center w-full mb-6">
+            <input
+              type="text"
+              placeholder="Enter keywords (e.g., construction, IT services, healthcare)"
+              class="px-4 py-3 w-full md:w-3/4 text-gray-700 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <button
+              class="bg-blue-600 text-white px-6 py-3 rounded-r-lg hover:bg-blue-700 transition-colors duration-300 mt-2 md:mt-0 font-medium flex items-center justify-center"
+            >
+              <i class="fas fa-search mr-2"></i> Search
+            </button>
+          </div>
+          
+          <div class="flex flex-wrap -mx-2">
+            <div class="px-2 w-full md:w-1/3 mb-4">
+              <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">All Categories</option>
+                <option value="construction">Construction</option>
+                <option value="medical">Medical & Healthcare</option>
+                <option value="it">IT & Software</option>
+                <option value="transport">Transport</option>
+                <option value="energy">Energy & Power</option>
+              </select>
+            </div>
+            <div class="px-2 w-full md:w-1/3 mb-4">
+              <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">All States</option>
+                <option value="delhi">Delhi</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="tamilnadu">Tamil Nadu</option>
+                <option value="gujarat">Gujarat</option>
+              </select>
+            </div>
+            <div class="px-2 w-full md:w-1/3 mb-4">
+              <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">All Deadlines</option>
+                <option value="7days">Next 7 Days</option>
+                <option value="15days">Next 15 Days</option>
+                <option value="30days">Next 30 Days</option>
+                <option value="60days">Next 60 Days</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="text-center mt-6">
+            <button class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 font-medium flex items-center mx-auto">
+              <i class="fas fa-filter mr-2"></i> Advanced Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tender Categories -->
+  <div class="py-16 bg-white">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4 gradient-text">Explore Tender Categories</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">Browse through our comprehensive collection of government tenders across various sectors</p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- Category 1 -->
+        <div class="bg-blue-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-hospital"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">Healthcare</h3>
+          <p class="text-sm text-gray-600 mt-2">230+ Tenders</p>
+        </div>
+        
+        <!-- Category 2 -->
+        <div class="bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-road"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">Infrastructure</h3>
+          <p class="text-sm text-gray-600 mt-2">450+ Tenders</p>
+        </div>
+        
+        <!-- Category 3 -->
+        <div class="bg-purple-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">IT Services</h3>
+          <p class="text-sm text-gray-600 mt-2">380+ Tenders</p>
+        </div>
+        
+        <!-- Category 4 -->
+        <div class="bg-yellow-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-train"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">Transportation</h3>
+          <p class="text-sm text-gray-600 mt-2">290+ Tenders</p>
+        </div>
+        
+        <!-- Category 5 -->
+        <div class="bg-red-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-solar-panel"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">Energy</h3>
+          <p class="text-sm text-gray-600 mt-2">180+ Tenders</p>
+        </div>
+        
+        <!-- Category 6 -->
+        <div class="bg-indigo-50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+          <div class="w-16 h-16 mx-auto mb-4 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800">Education</h3>
+          <p class="text-sm text-gray-600 mt-2">210+ Tenders</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard - Featured Tenders -->
+  <div id="tenders" class="container mx-auto px-6 md:px-20 py-16 bg-gray-50">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4 gradient-text">Featured Tenders</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">Discover high-value opportunities across various sectors</p>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="relative">
+      <!-- Left Arrow -->
+      <button onclick="scrollLeft()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full shadow-md hover:bg-blue-700 z-10 transition-all duration-300 focus:outline-none">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Right Arrow -->
+      <button onclick="scrollRight()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full shadow-md hover:bg-blue-700 z-10 transition-all duration-300 focus:outline-none">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <!-- Scrollable Container -->
+      <div class="scroll-container px-16 py-4">
+
+        <!-- Hospital Tender -->
+        <div class="tender-card bg-white shadow-md rounded-xl overflow-hidden flex-none w-80 animate-fade-in" style="animation-delay: 0.1s;">
+          <div class="relative">
+            <img src="/api/placeholder/400/200" alt="Hospital Tender" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 bg-blue-600 text-white px-3 py-1 m-2 rounded-full text-xs font-medium">
+              Medical
+            </div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Advanced Medical Equipment</h2>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <span class="text-gray-600 text-sm">Delhi NCR</span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <p class="text-gray-600 text-sm flex items-start">
+                <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                <span>Procurement of advanced surgical equipment for government hospitals</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-rupee-sign text-green-500 mr-2"></i>
+                <span><strong>Budget:</strong> ₹2,000,000</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-calendar-alt text-yellow-500 mr-2"></i>
+                <span><strong>Deadline:</strong> Feb 15, 2025</span>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-eye mr-1"></i> View Details
+              </button>
+              <button class="bg-green-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-green-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-1"></i> Register
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Train Tender -->
+        <div class="tender-card bg-white shadow-md rounded-xl overflow-hidden flex-none w-80 animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="relative">
+            <img src="/api/placeholder/400/200" alt="Railway Tender" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 bg-yellow-600 text-white px-3 py-1 m-2 rounded-full text-xs font-medium">
+              Transport
+            </div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Railway Network Expansion</h2>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <span class="text-gray-600 text-sm">Maharashtra</span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <p class="text-gray-600 text-sm flex items-start">
+                <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                <span>Construction of new rail lines connecting major industrial zones</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-rupee-sign text-green-500 mr-2"></i>
+                <span><strong>Budget:</strong> ₹5,000,000</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-calendar-alt text-yellow-500 mr-2"></i>
+                <span><strong>Deadline:</strong> Mar 1, 2025</span>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-eye mr-1"></i> View Details
+              </button>
+              <button class="bg-green-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-green-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-1"></i> Register
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Road Tender -->
+        <div class="tender-card bg-white shadow-md rounded-xl overflow-hidden flex-none w-80 animate-fade-in" style="animation-delay: 0.3s;">
+          <div class="relative">
+            <img src="/api/placeholder/400/200" alt="Road Tender" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 bg-green-600 text-white px-3 py-1 m-2 rounded-full text-xs font-medium">
+              Infrastructure
+            </div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Highway Renovation</h2>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <span class="text-gray-600 text-sm">Gujarat</span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <p class="text-gray-600 text-sm flex items-start">
+                <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                <span>Renovation and repairs of Sunshine Highway connecting major cities</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-rupee-sign text-green-500 mr-2"></i>
+                <span><strong>Budget:</strong> ₹3,000,000</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-calendar-alt text-yellow-500 mr-2"></i>
+                <span><strong>Deadline:</strong> Feb 28, 2025</span>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-eye mr-1"></i> View Details
+              </button>
+              <button class="bg-green-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-green-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-1"></i>Register
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IT Services Tender -->
+        <div class="tender-card bg-white shadow-md rounded-xl overflow-hidden flex-none w-80 animate-fade-in" style="animation-delay: 0.4s;">
+          <div class="relative">
+            <img src="/api/placeholder/400/200" alt="IT Services Tender" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 bg-purple-600 text-white px-3 py-1 m-2 rounded-full text-xs font-medium">
+              IT
+            </div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Digital Transformation Services</h2>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <span class="text-gray-600 text-sm">Karnataka</span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <p class="text-gray-600 text-sm flex items-start">
+                <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                <span>Implementation of digital services for Municipal Corporation</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-rupee-sign text-green-500 mr-2"></i>
+                <span><strong>Budget:</strong> ₹4,500,000</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-calendar-alt text-yellow-500 mr-2"></i>
+                <span><strong>Deadline:</strong> Mar 15, 2025</span>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-eye mr-1"></i> View Details
+              </button>
+              <button class="bg-green-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-green-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-1"></i> Register
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Energy Tender -->
+        <div class="tender-card bg-white shadow-md rounded-xl overflow-hidden flex-none w-80 animate-fade-in" style="animation-delay: 0.5s;">
+          <div class="relative">
+            <img src="/api/placeholder/400/200" alt="Energy Tender" class="w-full h-48 object-cover">
+            <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 m-2 rounded-full text-xs font-medium">
+              Energy
+            </div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Solar Power Installation</h2>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+              <span class="text-gray-600 text-sm">Rajasthan</span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <p class="text-gray-600 text-sm flex items-start">
+                <i class="fas fa-info-circle text-blue-500 mr-2 mt-1"></i>
+                <span>Installation of solar panels in government buildings</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-rupee-sign text-green-500 mr-2"></i>
+                <span><strong>Budget:</strong> ₹6,500,000</span>
+              </p>
+              <p class="text-gray-600 text-sm flex items-center">
+                <i class="fas fa-calendar-alt text-yellow-500 mr-2"></i>
+                <span><strong>Deadline:</strong> Apr 5, 2025</span>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-blue-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-eye mr-1"></i> View Details
+              </button>
+              <button class="bg-green-600 text-white py-2 px-4 rounded-lg text-sm hover:bg-green-700 transition-colors duration-300 flex-1 flex items-center justify-center">
+                <i class="fas fa-user-plus mr-1"></i> Register
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest Tenders Table -->
+  <div class="py-16 bg-white">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4 gradient-text">Latest Government Tenders</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">Stay updated with the most recent opportunities</p>
+      </div>
+      
+      <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="py-3 px-4 text-left">Tender ID</th>
+              <th class="py-3 px-4 text-left">Title</th>
+              <th class="py-3 px-4 text-left">Department</th>
+              <th class="py-3 px-4 text-left">Location</th>
+              <th class="py-3 px-4 text-left">Deadline</th>
+              <th class="py-3 px-4 text-left">Value (₹)</th>
+              <th class="py-3 px-4 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">TN-2345-67</td>
+              <td class="py-3 px-4 font-medium">Water Treatment Plant Installation</td>
+              <td class="py-3 px-4">Public Health Department</td>
+              <td class="py-3 px-4">Tamil Nadu</td>
+              <td class="py-3 px-4">Mar 10, 2025</td>
+              <td class="py-3 px-4">₹2,500,000</td>
+              <td class="py-3 px-4 text-center">
+                <button class="bg-blue-600 text-white py-1 px-3 rounded text-xs hover:bg-blue-700 transition-colors duration-300">
+                  View
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">DL-5678-90</td>
+              <td class="py-3 px-4 font-medium">Smart City Development Phase II</td>
+              <td class="py-3 px-4">Urban Development</td>
+              <td class="py-3 px-4">Delhi</td>
+              <td class="py-3 px-4">Feb 28, 2025</td>
+              <td class="py-3 px-4">₹9,800,000</td>
+              <td class="py-3 px-4 text-center">
+                <button class="bg-blue-600 text-white py-1 px-3 rounded text-xs hover:bg-blue-700 transition-colors duration-300">
+                  View
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">KA-9012-34</td>
+              <td class="py-3 px-4 font-medium">Airport Terminal Expansion</td>
+              <td class="py-3 px-4">Civil Aviation</td>
+              <td class="py-3 px-4">Karnataka</td>
+              <td class="py-3 px-4">Apr 5, 2025</td>
+              <td class="py-3 px-4">₹15,000,000</td>
+              <td class="py-3 px-4 text-center">
+                <button class="bg-blue-600 text-white py-1 px-3 rounded text-xs hover:bg-blue-700 transition-colors duration-300">
+                  View
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">MH-3456-78</td>
+              <td class="py-3 px-4 font-medium">School Modernization Program</td>
+              <td class="py-3 px-4">Education Department</td>
+              <td class="py-3 px-4">Maharashtra</td>
+              <td class="py-3 px-4">Mar 20, 2025</td>
+              <td class="py-3 px-4">₹3,200,000</td>
+              <td class="py-3 px-4 text-center">
+                <button class="bg-blue-600 text-white py-1 px-3 rounded text-xs hover:bg-blue-700 transition-colors duration-300">
+                  View
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">GJ-7890-12</td>
+              <td class="py-3 px-4 font-medium">Industrial Zone Infrastructure</td>
+              <td class="py-3 px-4">Industry & Commerce</td>
+              <td class="py-3 px-4">Gujarat</td>
+              <td class="py-3 px-4">Mar 25, 2025</td>
+              <td class="py-3 px-4">₹7,600,000</td>
+              <td class="py-3 px-4 text-center">
+                <button class="bg-blue-600 text-white py-1 px-3 rounded text-xs hover:bg-blue-700 transition-colors duration-300">
+                  View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <button class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium flex items-center mx-auto">
+          <i class="fas fa-list-ul mr-2"></i> View All Tenders
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- News & Updates with Marquee -->
+  <div class="py-10 bg-gray-50">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold mb-4 gradient-text">Latest Updates</h2>
+      </div>
+      
+      <div class="bg-blue-600 text-white p-4 rounded-lg shadow-md">
+        <div class="marquee">
+          <div class="marquee-content">
+            <span class="mr-12"><i class="fas fa-bell mr-2"></i> New Railway tenders worth ₹50 Crore announced for North Eastern Region</span>
+            <span class="mr-12"><i class="fas fa-certificate mr-2"></i> Government extends deadline for Smart City Project tenders till March 30, 2025</span>
+            <span class="mr-12"><i class="fas fa-briefcase mr-2"></i> Ministry of Health announces medical equipment procurement tenders worth ₹150 Crore</span>
+            <span class="mr-12"><i class="fas fa-university mr-2"></i> Recent policy change: E-tendering mandatory for all govt. projects above ₹1 Crore</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Choose Us Section -->
+  <div class="py-16 bg-white">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 animate-slide-left">
+          <h2 class="text-3xl font-bold mb-6 gradient-text">Why Choose TenderMind?</h2>
+          <ul class="space-y-4 custom-bullet">
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-100 flex items-center justify-center mt-1">
+                <i class="fas fa-check text-blue-600 text-xs"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="font-semibold text-lg text-gray-800">Comprehensive Database</h3>
+                <p class="text-gray-600">Access to over 8 Lac active tenders across India from all government departments and PSUs.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-100 flex items-center justify-center mt-1">
+                <i class="fas fa-check text-blue-600 text-xs"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="font-semibold text-lg text-gray-800">Real-time Alerts</h3>
+                <p class="text-gray-600">Get instant notifications for new tenders matching your business profile via email and SMS.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-100 flex items-center justify-center mt-1">
+                <i class="fas fa-check text-blue-600 text-xs"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="font-semibold text-lg text-gray-800">Advanced Analytics</h3>
+                <p class="text-gray-600">Gain insights into tender patterns, competition analysis, and success probability.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-100 flex items-center justify-center mt-1">
+                <i class="fas fa-check text-blue-600 text-xs"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="font-semibold text-lg text-gray-800">Dedicated Support</h3>
+                <p class="text-gray-600">Our tender experts are available 24/7 to help you navigate the bidding process.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-8">
+            <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium inline-flex items-center">
+              <i class="fas fa-headset mr-2"></i> Contact Our Experts
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 animate-slide-right">
+          <img src="/api/placeholder/600/480" alt="TenderMind Benefits" class="rounded-xl shadow-xl hover:shadow-2xl transition-shadow duration-300">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4 gradient-text">Our Success Stories</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">See how businesses across India have benefited from our platform</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.1s;">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+              <i class="fas fa-user text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-800">Rajesh Kumar</h3>
+              <p class="text-sm text-gray-600">CEO, Infratech Solutions</p>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"TenderMind transformed how we find and apply for government projects. Their platform helped us secure contracts worth over ₹25 Crore in just 6 months!"</p>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.2s;">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+              <i class="fas fa-user text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-800">Priya Sharma</h3>
+              <p class="text-sm text-gray-600">Director, MediEquip Ltd.</p>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"The tender alerts feature alone is worth the subscription. We never miss an opportunity now, and their customer support team is always ready to assist."</p>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.3s;">
+          <div class="flex items-center mb-4">
+            <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+              <i class="fas fa-user text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-800">Vikram Singh</h3>
+              <p class="text-sm text-gray-600">MD, Digital Solutions Inc.</p>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"As a first-time bidder, I was overwhelmed by the tender process. TenderMind guided me every step of the way, and we won our first government contract!"</p>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium">
+          <span>Read More Success Stories</span>
+          <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="container mx-auto px-6 md:px-20 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Find Your Next Big Opportunity?</h2>
+      <p class="text-lg mb-8 max-w-3xl mx-auto">Join thousands of businesses winning government contracts through TenderMind's comprehensive tender intelligence platform.</p>
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+        <a href="./newTender.html" class="bg-white text-blue-600 hover:bg-blue-100 px-8 py-4 rounded-lg font-semibold transition-colors duration-300 shadow-lg flex items-center justify-center">
+          <i class="fas fa-user-plus mr-2"></i> Register Now
+        </a>
+        <a href="#" class="bg-transparent hover:bg-white hover:text-blue-600 text-white px-8 py-4 rounded-lg font-semibold border-2 border-white transition-colors duration-300 flex items-center justify-center">
+          <i class="fas fa-paper-plane mr-2"></i> Request Demo
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-6 md:px-20">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Company Info -->
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center">
+            <i class="fas fa-clipboard-check mr-2"></i> TenderMind
+          </h3>
+          <p class="text-gray-400 mb-4">Your reliable partner in government tender management, helping businesses across India to win government contracts since 2020.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Home
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> About Us
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Services
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Pricing
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Services -->
+        <div>
+          <h3 class="text-xl font-bold mb-4">Our Services</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Tender Alerts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Bid Management
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Document Preparation
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Competitor Analysis
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 flex items-center">
+                <i class="fas fa-chevron-right text-xs mr-2"></i> Training & Workshops
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Contact Info -->
+        <div>
+          <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+              <span class="text-gray-400">1234 Tender Road, Sector 42<br>New Delhi, 110001, India</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone-alt mr-3 text-blue-400"></i>
+              <span class="text-gray-400">+91 1234 567 890</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-3 text-blue-400"></i>
+              <span class="text-gray-400">info@tendermind.com</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-clock mr-3 text-blue-400"></i>
+              <span class="text-gray-400">Mon-Fri: 9:00 AM - 6:00 PM</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400 text-sm">
+        <p>&copy; 2025 TenderMind. All rights reserved. | <a href="#" class="hover:text-white">Privacy Policy</a> | <a href="#" class="hover:text-white">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile Menu Toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Horizontal Scroll for Tender Cards
+    function scrollRight() {
+      const container = document.querySelector('.scroll-container');
+      container.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+    
+    function scrollLeft() {
+      const container = document.querySelector('.scroll-container');
+      container.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+    
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+    
+    counters.forEach(counter => {
+      const target = parseInt(counter.innerText);
+      const increment = target / speed;
+      let current = 0;
+      
+      const updateCount = () => {
+        current += increment;
+        if (current < target) {
+          counter.innerText = Math.ceil(current);
+          setTimeout(updateCount, 1);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      
+      updateCount();
+    });
+  </script>
+</body>
+</html>
+
+        

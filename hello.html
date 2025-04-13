@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tender Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-4">Tender Status</h2>
+        <form id="tenderForm" class="space-y-4">
+            <fieldset class="border border-indigo-300 p-4 rounded-lg">
+                <legend class="font-semibold text-indigo-700">Search Criteria</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-indigo-600">Tender Status:</label>
+                        <select id="tenderStatus" class="w-full border p-2 rounded">
+                            <option>-Select-</option>
+                            <option>To Be Opened Tenders</option>
+                            <option>Technical Bid Opening</option>
+                            <option>Technical Evaluation</option>
+                            <option>Financial Bid Opening</option>
+                            <option>Financial Evaluation</option>
+                            <option>AOC</option>
+                            <option>Retender</option>
+                            <option>Cancelled</option>
+                            <option>Concluded</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-indigo-600">Keyword:</label>
+                        <input id="keyword" type="text" class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-indigo-600">From Date:</label>
+                        <input id="fromDate" type="date" class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-indigo-600">To Date:</label>
+                        <input id="toDate" type="date" class="w-full border p-2 rounded">
+                    </div>
+                    <div>
+                        <label class="block text-indigo-600">Form of Contract:</label>
+                        <select id="formOfContract" class="w-full border p-2 rounded">
+                            <option>-Select-</option>
+                            <option>Fixed Price</option>
+                            <option>Time & Material</option>
+                            <option>Cost Plus</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-indigo-600">Tender Category:</label>
+                        <select id="tenderCategory" class="w-full border p-2 rounded">
+                            <option>-Select-</option>
+                            <option>Construction</option>
+                            <option>Services</option>
+                            <option>Goods</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="flex justify-end space-x-2">
+                <button type="reset" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Clear</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("tenderForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const tenderData = {
+                tenderStatus: document.getElementById("tenderStatus").value,
+                keyword: document.getElementById("keyword").value,
+                fromDate: document.getElementById("fromDate").value,
+                toDate: document.getElementById("toDate").value,
+                formOfContract: document.getElementById("formOfContract").value,
+                tenderCategory: document.getElementById("tenderCategory").value
+            };
+
+            // Save data in LocalStorage
+            localStorage.setItem("tenderData", JSON.stringify(tenderData));
+
+            // Redirect to display page
+            window.location.href = "display_tender.html";
+        });
+    </script>
+</body>
+</html>

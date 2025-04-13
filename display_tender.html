@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tender Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-4">Tender Information</h2>
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-gray-300">
+                    <th class="p-2 border">Tender Status</th>
+                    <th class="p-2 border">Keyword</th>
+                    <th class="p-2 border">Date Range</th>
+                    <th class="p-2 border">Form of Contract</th>
+                    <th class="p-2 border">Tender Category</th>
+                    <th class="p-2 border">Tender File</th>
+                </tr>
+            </thead>
+            <tbody id="tenderTable"></tbody>
+        </table>
+        <div class="flex justify-center mt-4 space-x-4">
+            <button onclick="clearTenders()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete All Data</button>
+            <a href="newTender.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Back to Tender Form</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadTenderData();
+        });
+
+        function loadTenderData() {
+            const tenderData = JSON.parse(localStorage.getItem("tenderData")) || [];
+            const tableBody = document.getElementById("tenderTable");
+            tableBody.innerHTML = ""; 
+
+            if (tenderData.length > 0) {
+                tenderData.forEach((tender, index) => {
+                    const row = document.createElement("tr");
+                    row.classList.add("border-t");
+                    row.innerHTML = `
+                        <td class="p-2 border">${tender.tenderStatus}</td>
+                        <td class="p-2 border">${tender.keyword}</td>
+                        <td class="p-2 border">${tender.fromDate} to ${tender.toDate}</td>
+                        <td class="p-2 border">${tender.formOfContract}</td>
+                        <td class="p-2 border">${tender.tenderCategory}</td>
+                        <td class="p-2 border">
+                            ${tender.tenderFileName ? `<a href="${tender.tenderFileName}" target="_blank" onclick="alert('All tenders will be displayed on 10-10-2025.')">${tender.tenderFileName}</a>` : "No File Uploaded"}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = "<tr><td colspan='6' class='text-center p-4'>No Data Found</td></tr>";
+            }
+        }
+
+        function clearTenders() {
+            localStorage.removeItem("tenderData");
+            alert("All data cleared!");
+            location.reload();
+        }
+    </script>
+</body>
+</html>

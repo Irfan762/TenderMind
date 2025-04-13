@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reales Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-900 to-blue-800 text-white flex justify-center items-center h-screen">
+  <div class="flex w-11/12 max-w-6xl bg-blue-950 rounded-2xl shadow-lg overflow-hidden">
+    <!-- Left Section -->
+    <div class="flex-1 p-10 text-center">
+      <img src="/image/tenderr.png" alt="Reales Logo" class="mx-auto mb-5 w-32">
+      <h1 class="text-4xl font-bold mb-4">Welcome!</h1>
+      <p class="text-lg leading-7 mb-6">
+        Reales is a cutting-edge platform dedicated to revolutionizing asset management through blockchain technology. 
+        We specialize in the tokenization of physical assets, making them accessible, secure, and easily tradable in a 
+        decentralized ecosystem.
+      </p>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex-1 p-10 bg-blue-800 flex flex-col justify-center">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
+      <form class="space-y-4">
+        <!-- Username Field -->
+        <div>
+          <label for="username" class="block text-lg mb-2">User Name</label>
+          <input 
+            type="text" 
+            id="username" 
+            placeholder="Enter your username" 
+            class="w-full p-3 rounded-lg bg-blue-700 border border-blue-500 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-lg mb-2">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Enter your password" 
+            class="w-full p-3 rounded-lg bg-blue-700 border border-blue-500 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-400 text-white text-lg font-medium rounded-lg shadow-md hover:from-blue-400 hover:to-blue-300 focus:ring-2 focus:ring-blue-400">
+          <a href="./web.html">Submit</a>
+        </button>
+      </form>
+      <p class="text-sm mt-4 text-center">
+        Don't have an account? <a href="./createACC.html" class="text-blue-300 hover:text-blue-100 underline">Sign Up</a>
+      </p>
+    </div>
+  </div>
+</body>
+
+
+</html>
